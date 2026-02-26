@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
@@ -19,6 +20,7 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -45,27 +47,36 @@ class MainActivity : ComponentActivity() {
                 modifier = Modifier
                     .fillMaxWidth()
                     .fillMaxHeight(0.45f)
-                    .background(Color(0xFF5B4BC4))
-            )
-
-            // LOGO KREIS
-            Box(
-                modifier = Modifier
-                    .size(160.dp)
-                    .align(Alignment.TopCenter)
-                    .offset(y = 80.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFD9D6F5)),
+                    .background(Color(0xFF5B4BC4)),
                 contentAlignment = Alignment.Center
             ) {
-                Box(
-                    modifier = Modifier
-                        .size(160.dp)
-                        .align(Alignment.TopCenter)
-                        .offset(y = 80.dp)
-                        .clip(CircleShape)
-                        .background(Color(0xFFD9D6F5))
-                )
+
+                // Kreis + Logo Stack
+                Box(contentAlignment = Alignment.Center) {
+
+                    // Großer transparenter Kreis
+                    Box(
+                        modifier = Modifier
+                            .size(200.dp)
+                            .clip(CircleShape)
+                            .background(Color.White.copy(alpha = 0.15f))
+                    )
+
+                    // Innerer Kreis
+                    Box(
+                        modifier = Modifier
+                            .size(160.dp)
+                            .clip(CircleShape)
+                            .background(Color(0xFFF2F2F2))
+                    )
+
+                    // Logo oben
+                    Image(
+                        painter = painterResource(id = R.drawable.logosvg),
+                        contentDescription = null,
+                        modifier = Modifier.size(130.dp)
+                    )
+                }
             }
 
             // WEISSE KARTE
