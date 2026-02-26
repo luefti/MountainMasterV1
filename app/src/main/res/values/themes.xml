@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Dein normales App-Theme -->
     <style name="Theme.MountainMasterV1" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Einfaches Splash-Theme (KEIN Theme.SplashScreen!) -->
+    <style name="Theme.MountainMasterV1.Splash">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
 </resources>
