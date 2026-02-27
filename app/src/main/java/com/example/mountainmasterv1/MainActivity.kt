@@ -5,7 +5,16 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.example.mountainmasterv1.ui.theme.MountainMasterV1Theme
+
+// Screen Routes definieren
+sealed class Screen(val route: String) {
+    object Login : Screen("login")
+    object Register : Screen("register")
+}
 
 class MainActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,16 +22,45 @@ class MainActivity : ComponentActivity(){
         enableEdgeToEdge()
         setContent {
             MountainMasterV1Theme {
-                // Hier verbinden wir Design und Logik
-                val viewModel: LoginViewModel = viewModel()
+                // NavController für Navigation
+                val navController = rememberNavController()
 
-                LoginScreen(
-                    email = viewModel.email,
-                    onEmailChange = viewModel::onEmailChange,
-                    password = viewModel.password,
-                    onPasswordChange = viewModel::onPasswordChange,
-                    onLoginClick = viewModel::onLoginClick
-                )
+                NavHost(navController = navController, startDestination = Screen.Login.route) {
+
+                    // LOGIN SCREEN
+                    composable(Screen.Login.route) {
+                        val viewModel: LoginViewModel = viewModel()
+
+                        LoginScreen(
+                            email = viewModel.email,
+                            onEmailChange = viewModel::onEmailChange,
+                            password = viewModel.password,
+                            onPasswordChange = viewModel::onPasswordChange,
+                            onLoginClick = viewModel::onLoginClick,
+                            onNavigateToRegister = {
+                                navController.navigate(Screen.Register.route)
+                            }
+                        )
+                    }
+
+                    // REGISTER SCREEN
+                    composable(Screen.Register.route) {
+                        val viewModel: RegisterViewModel = viewModel()
+
+                        RegisterScreen(
+                            username = viewModel.username,
+                            onUsernameChange = viewModel::onUsernameChange,
+                            email = viewModel.email,
+                            onEmailChange = viewModel::onEmailChange,
+                            password = viewModel.password,
+                            onPasswordChange = viewModel::onPasswordChange,
+                            onRegisterClick = viewModel::onRegisterClick,
+                            onNavigateToLogin = {
+                                navController.popBackStack() // Zurück zum Login
+                            }
+                        )
+                    }
+                }
             }
         }
     }

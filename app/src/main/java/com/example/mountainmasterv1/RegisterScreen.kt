@@ -2,8 +2,6 @@ package com.example.mountainmasterv1
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,19 +24,21 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun LoginScreen(
+fun RegisterScreen(
+    username: String,
+    onUsernameChange: (String) -> Unit,
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onLoginClick: () -> Unit,
-    onNavigateToRegister: () -> Unit
+    onRegisterClick: () -> Unit,
+    onNavigateToLogin: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
-        // LILA HEADER
-        HeaderSection()
+        // LILA HEADER (wiederverwendet)
+        RegisterHeaderSection()
 
         // WEISSE KARTE
         Column(
@@ -48,22 +48,34 @@ fun LoginScreen(
                 .clip(RoundedCornerShape(topStart = 40.dp, topEnd = 40.dp))
                 .background(Color(0xFFF2F2F2))
                 .padding(32.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(80.dp))
 
             Text(
-                text = "Welcome back!",
+                text = "Create an account",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = "You've been missed",
+                text = "and Master the Mountains",
                 color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(32.dp))
+
+            // Username Feld
+            OutlinedTextField(
+                value = username,
+                onValueChange = onUsernameChange,
+                placeholder = { Text("Username") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(12.dp),
+                singleLine = true
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
 
             // E-Mail Feld
             OutlinedTextField(
@@ -109,7 +121,7 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "Forgot Password?",
+                text = "At least 8 characters",
                 modifier = Modifier.align(Alignment.End),
                 color = Color.Gray,
                 fontSize = 14.sp
@@ -118,34 +130,34 @@ fun LoginScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = onLoginClick,
+                onClick = onRegisterClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5B4BC4))
             ) {
-                Text("Login")
+                Text("Register")
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Toggle mit isLoginScreen = true
+            // Toggle mit isLoginScreen = false (weil wir auf Register sind)
             RegisterLoginToggle(
-                onRegisterClick = onNavigateToRegister,
-                onLoginClick = { },  // Nichts tun, da wir schon auf Login sind
-                isLoginScreen = true  // NEU: Sagt dem Toggle, dass wir im Login sind
+                onRegisterClick = { },  // Nichts tun, da wir schon auf Register sind
+                onLoginClick = onNavigateToLogin,
+                isLoginScreen = false
             )
         }
     }
 }
 
 @Composable
-fun HeaderSection() {
+fun RegisterHeaderSection() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.45f)
+            .fillMaxHeight(0.35f)  // Weniger Höhe (0.4f statt 0.45f)
             .background(Color(0xFF5B4BC4)),
         contentAlignment = Alignment.Center
     ) {
@@ -154,7 +166,7 @@ fun HeaderSection() {
             // Großer transparenter Kreis
             Box(
                 modifier = Modifier
-                    .size(200.dp)
+                    .size(200.dp)  // Kleinere Kreise
                     .clip(CircleShape)
                     .background(Color.White.copy(alpha = 0.15f))
             )
@@ -162,7 +174,7 @@ fun HeaderSection() {
             // Innerer Kreis
             Box(
                 modifier = Modifier
-                    .size(160.dp)
+                    .size(160.dp)  // Kleinere Kreise
                     .clip(CircleShape)
                     .background(Color(0xFFF2F2F2))
             )
@@ -171,66 +183,7 @@ fun HeaderSection() {
             Image(
                 painter = painterResource(id = R.drawable.logosvg),
                 contentDescription = null,
-                modifier = Modifier.size(130.dp)
-            )
-        }
-    }
-}
-
-// Toggle mit dynamischen Farben
-@Composable
-fun RegisterLoginToggle(
-    onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit,
-    isLoginScreen: Boolean  // NEU: true wenn auf Login-Seite, false wenn auf Register-Seite
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .clip(RoundedCornerShape(14.dp))
-            .background(Color.Transparent)
-            .border(1.dp, Color.Black, RoundedCornerShape(14.dp))
-    ) {
-        // Register Button (links)
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .then(
-                    if (!isLoginScreen) {
-                        Modifier
-                            .clip(RoundedCornerShape(14.dp))
-                            .background(Color(0xFF5B4BC4))
-                    } else Modifier
-                )
-                .clickable { onRegisterClick() },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "Register",
-                color = if (!isLoginScreen) Color.White else Color(0xFF5B4BC4)
-            )
-        }
-
-        // Login Button (rechts)
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .then(
-                    if (isLoginScreen) {
-                        Modifier
-                            .clip(RoundedCornerShape(14.dp))
-                            .background(Color(0xFF5B4BC4))
-                    } else Modifier
-                )
-                .clickable { onLoginClick() },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "Login",
-                color = if (isLoginScreen) Color.White else Color(0xFF5B4BC4)
+                modifier = Modifier.size(130.dp)  // Kleineres Logo
             )
         }
     }
