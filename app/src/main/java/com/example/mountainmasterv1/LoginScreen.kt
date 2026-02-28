@@ -1,11 +1,7 @@
 package com.example.mountainmasterv1
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
@@ -17,13 +13,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+
 
 @Composable
 fun LoginScreen(
@@ -32,13 +28,13 @@ fun LoginScreen(
     password: String,
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
-    onNavigateToRegister: () -> Unit
+    onNavigateToRegister: () -> Unit  // <- NEU: Parameter hinzugefügt!
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         // LILA HEADER
-        HeaderSection()
+        HeaderSection(topPadding = 80)
 
         // WEISSE KARTE
         Column(
@@ -130,107 +126,11 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Toggle mit isLoginScreen = true
-            RegisterLoginToggle(
-                onRegisterClick = onNavigateToRegister,
+            // Hier den Toggle mit dem Navigations-Parameter aufrufen
+            LoginRegisterToggle(
+                onRegisterClick = onNavigateToRegister,  // <- Hier wird's verwendet!
                 onLoginClick = { },  // Nichts tun, da wir schon auf Login sind
-                isLoginScreen = true  // NEU: Sagt dem Toggle, dass wir im Login sind
-            )
-        }
-    }
-}
-
-@Composable
-fun HeaderSection() {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .fillMaxHeight(0.45f)
-            .background(Color(0xFF5B4BC4)),
-        contentAlignment = Alignment.Center
-    ) {
-        // Kreis + Logo Stack
-        Box(contentAlignment = Alignment.Center) {
-            // Großer transparenter Kreis
-            Box(
-                modifier = Modifier
-                    .size(200.dp)
-                    .clip(CircleShape)
-                    .background(Color.White.copy(alpha = 0.15f))
-            )
-
-            // Innerer Kreis
-            Box(
-                modifier = Modifier
-                    .size(160.dp)
-                    .clip(CircleShape)
-                    .background(Color(0xFFF2F2F2))
-            )
-
-            // Logo
-            Image(
-                painter = painterResource(id = R.drawable.logosvg),
-                contentDescription = null,
-                modifier = Modifier.size(130.dp)
-            )
-        }
-    }
-}
-
-// Toggle mit dynamischen Farben
-@Composable
-fun RegisterLoginToggle(
-    onRegisterClick: () -> Unit,
-    onLoginClick: () -> Unit,
-    isLoginScreen: Boolean  // NEU: true wenn auf Login-Seite, false wenn auf Register-Seite
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .height(50.dp)
-            .clip(RoundedCornerShape(14.dp))
-            .background(Color.Transparent)
-            .border(1.dp, Color.Black, RoundedCornerShape(14.dp))
-    ) {
-        // Register Button (links)
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .then(
-                    if (!isLoginScreen) {
-                        Modifier
-                            .clip(RoundedCornerShape(14.dp))
-                            .background(Color(0xFF5B4BC4))
-                    } else Modifier
-                )
-                .clickable { onRegisterClick() },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "Register",
-                color = if (!isLoginScreen) Color.White else Color(0xFF5B4BC4)
-            )
-        }
-
-        // Login Button (rechts)
-        Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxHeight()
-                .then(
-                    if (isLoginScreen) {
-                        Modifier
-                            .clip(RoundedCornerShape(14.dp))
-                            .background(Color(0xFF5B4BC4))
-                    } else Modifier
-                )
-                .clickable { onLoginClick() },
-            contentAlignment = Alignment.Center
-        ) {
-            Text(
-                "Login",
-                color = if (isLoginScreen) Color.White else Color(0xFF5B4BC4)
+                isLoginScreen = true
             )
         }
     }
