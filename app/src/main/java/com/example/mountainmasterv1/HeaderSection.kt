@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun HeaderSection(
-    topPadding: Int = 0  // NEU: Parameter für zusätzlichen Abstand nach oben
+    topPadding: Int = 0
 ) {
     Box(
         modifier = Modifier
@@ -22,14 +22,13 @@ fun HeaderSection(
             .fillMaxHeight(0.45f)
             .background(Color(0xFF5B4BC4))
     ) {
-        // Kreis + Logo Stack - jetzt mit anpassbarem padding
         Box(
             modifier = Modifier
-                .align(Alignment.TopCenter)  // Am oberen Rand ausrichten
-                .padding(top = topPadding.dp),  // Abstand von oben anpassbar
+                .align(Alignment.TopCenter)
+                .padding(top = topPadding.dp),
             contentAlignment = Alignment.Center
         ) {
-            // Großer transparenter Kreis
+            // Großer Kreis
             Box(
                 modifier = Modifier
                     .size(200.dp)

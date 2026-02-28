@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 fun LoginRegisterToggle(
     onRegisterClick: () -> Unit,
     onLoginClick: () -> Unit,
-    isLoginScreen: Boolean  // Dieser Parameter muss übergeben werden!
+    isLoginScreen: Boolean
 ) {
     Row(
         modifier = Modifier
@@ -27,7 +27,7 @@ fun LoginRegisterToggle(
             .background(Color.Transparent)
             .border(1.dp, Color.Black, RoundedCornerShape(14.dp))
     ) {
-        // Register Button (links)
+
         Box(
             modifier = Modifier
                 .weight(1f)
@@ -48,7 +48,6 @@ fun LoginRegisterToggle(
             )
         }
 
-        // Login Button (rechts)
         Box(
             modifier = Modifier
                 .weight(1f)

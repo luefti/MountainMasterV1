@@ -28,7 +28,7 @@ fun LoginScreen(
     password: String,
     onPasswordChange: (String) -> Unit,
     onLoginClick: () -> Unit,
-    onNavigateToRegister: () -> Unit  // <- NEU: Parameter hinzugefügt!
+    onNavigateToRegister: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
@@ -73,7 +73,7 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Passwort Feld mit Auge
+            // Passwort Feld und Auge
             var passwordVisible by remember { mutableStateOf(false) }
 
             OutlinedTextField(
@@ -126,10 +126,9 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Hier den Toggle mit dem Navigations-Parameter aufrufen
             LoginRegisterToggle(
-                onRegisterClick = onNavigateToRegister,  // <- Hier wird's verwendet!
-                onLoginClick = { },  // Nichts tun, da wir schon auf Login sind
+                onRegisterClick = onNavigateToRegister,
+                onLoginClick = { },
                 isLoginScreen = true
             )
         }

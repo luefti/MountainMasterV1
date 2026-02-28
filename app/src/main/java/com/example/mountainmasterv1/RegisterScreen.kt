@@ -141,8 +141,8 @@ fun RegisterScreen(
 
             // Toggle mit Navigation
             LoginRegisterToggle(
-                onRegisterClick = { },  // Nichts tun, da wir schon auf Register sind
-                onLoginClick = onNavigateToLogin,  // <- Hier wird's verwendet!
+                onRegisterClick = { },
+                onLoginClick = onNavigateToLogin,
                 isLoginScreen = false
             )
         }
