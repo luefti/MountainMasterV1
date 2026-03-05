@@ -1,4 +1,4 @@
-package com.example.mountainmasterv1
+package com.example.mountainmasterv1.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

@@ -1,4 +1,4 @@
-package com.example.mountainmasterv1
+package com.example.mountainmasterv1.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +11,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import com.example.mountainmasterv1.R
 
 @Composable
 fun HeaderSection(
