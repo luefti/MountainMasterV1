@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +18,7 @@ import com.example.mountainmasterv1.ui.theme.MountainMasterV1Theme
 sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Register : Screen("register")
+    object Main : Screen("main");
 }
 
 class MainActivity : ComponentActivity(){
@@ -34,6 +36,15 @@ class MainActivity : ComponentActivity(){
                     composable(Screen.Login.route) {
                         val viewModel: LoginViewModel = viewModel()
 
+                        // redirects to main screen when login clicked
+                        LaunchedEffect(viewModel.isLoggedIn) {
+                            if (viewModel.isLoggedIn) {
+                                navController.navigate(Screen.Main.route) {
+                                    popUpTo(Screen.Login.route) { inclusive = true } // Clear backstack
+                                }
+                            }
+                        }
+
                         LoginScreen(
                             email = viewModel.email,
                             onEmailChange = viewModel::onEmailChange,
@@ -44,6 +55,10 @@ class MainActivity : ComponentActivity(){
                                 navController.navigate(Screen.Register.route)
                             }
                         )
+                    }
+
+                    composable(Screen.Main.route) {
+                        MainScreen()
                     }
 
                     composable(Screen.Register.route) {

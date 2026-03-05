@@ -23,6 +23,9 @@ class LoginViewModel : ViewModel() {
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
+    var isLoggedIn by mutableStateOf(false)
+    private set
+
     // Funktionen zum Aktualisieren der Eingaben
     fun onEmailChange(newEmail: String) {
         email = newEmail
@@ -44,12 +47,14 @@ class LoginViewModel : ViewModel() {
                 Log.d("MountainMaster", "Email: $email")
                 Log.d("MountainMaster", "Password: $password")
 
+                // TODO:
                 // Simuliere Netzwerkaufruf
                 delay(2000)
 
                 // Beispiel: Erfolgreicher Login nur mit Testdaten
                 if (email == "test@test.com" && password == "123456") {
                     Log.d("MountainMaster", "Login erfolgreich!")
+                    isLoggedIn = true       // für main screen redirect
                 } else {
                     errorMessage = "Falsche E-Mail oder Passwort"
                 }
