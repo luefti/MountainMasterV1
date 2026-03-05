@@ -11,12 +11,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mountainmasterv1.navigation.Screen
+import com.example.mountainmasterv1.ui.screens.MainScreen
 import com.example.mountainmasterv1.ui.screens.login.LoginScreen
 import com.example.mountainmasterv1.ui.screens.login.LoginViewModel
 import com.example.mountainmasterv1.ui.screens.mailVerify.MailVerifyScreen
 import com.example.mountainmasterv1.ui.screens.register.RegisterScreen
 import com.example.mountainmasterv1.ui.screens.register.RegisterViewModel
 import com.example.mountainmasterv1.ui.theme.MountainMasterV1Theme
+import com.example.mountainmasterv1.ui.screens.MainScreen
 
 class MainActivity : ComponentActivity(){
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +65,12 @@ class MainActivity : ComponentActivity(){
                                 navController.popBackStack()
                             }
                         )
+                    }
+
+                    // TODO: fixen 
+                    // Main app content with bottom tab bar
+                    composable(Screen.Main.route) {
+                        MainScreen()
                     }
 
                     composable(
