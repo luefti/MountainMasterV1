@@ -31,6 +31,7 @@ fun RegisterScreen(
     password: String,
     onPasswordChange: (String) -> Unit,
     onRegisterClick: () -> Unit,
+    onNavigateToMailVerify: (String) -> Unit,  // NEU
     onNavigateToLogin: () -> Unit
 ) {
     Box(
@@ -129,7 +130,10 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = onRegisterClick,
+                onClick = {
+                    onRegisterClick()  // Erst die Registrierungs-Logik
+                    onNavigateToMailVerify(email)  // Dann zur MailVerify
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
@@ -143,7 +147,7 @@ fun RegisterScreen(
 
             // Toggle mit Navigation
             LoginRegisterToggle(
-                onRegisterClick = { },
+                onRegisterClick = { },  // Nichts tun, wir sind schon auf Register
                 onLoginClick = onNavigateToLogin,
                 isLoginScreen = false
             )
