@@ -9,6 +9,10 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.mountainmasterv1.ui.screens.login.LoginScreen
+import com.example.mountainmasterv1.ui.screens.login.LoginViewModel
+import com.example.mountainmasterv1.ui.screens.register.RegisterScreen
+import com.example.mountainmasterv1.ui.screens.register.RegisterViewModel
 import com.example.mountainmasterv1.ui.theme.MountainMasterV1Theme
 
 sealed class Screen(val route: String) {

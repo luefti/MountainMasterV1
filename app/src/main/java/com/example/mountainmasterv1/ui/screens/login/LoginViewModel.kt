@@ -1,19 +1,16 @@
-package com.example.mountainmasterv1
+package com.example.mountainmasterv1.ui.screens.login
 
 import android.util.Log
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.setValue
 
-class RegisterViewModel : ViewModel() {
+class LoginViewModel : ViewModel() {
     // State für die Eingaben
-    var username by mutableStateOf("")
-        private set
-
     var email by mutableStateOf("")
         private set
 
@@ -26,11 +23,10 @@ class RegisterViewModel : ViewModel() {
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
-    // Funktionen zum Aktualisieren der Eingaben
-    fun onUsernameChange(newUsername: String) {
-        username = newUsername
-    }
+    var isLoggedIn by mutableStateOf(false)
+    private set
 
+    // Funktionen zum Aktualisieren der Eingaben
     fun onEmailChange(newEmail: String) {
         email = newEmail
     }
@@ -39,24 +35,29 @@ class RegisterViewModel : ViewModel() {
         password = newPassword
     }
 
-    // Register-Funktion
-    fun onRegisterClick() {
+    // Login-Funktion
+    fun onLoginClick() {
         if (validateInputs()) {
             viewModelScope.launch {
                 isLoading = true
                 errorMessage = null
 
-                // Hier kommt später die echte Registrierung
-                Log.d("MountainMaster", "Registrierungs-Versuch mit:")
-                Log.d("MountainMaster", "Username: $username")
+                // Hier kommt später die echte Authentifizierung
+                Log.d("MountainMaster", "Login-Versuch mit:")
                 Log.d("MountainMaster", "Email: $email")
                 Log.d("MountainMaster", "Password: $password")
 
+                // TODO:
                 // Simuliere Netzwerkaufruf
                 delay(2000)
 
-                // Beispiel: Erfolgreiche Registrierung
-                Log.d("MountainMaster", "Registrierung erfolgreich!")
+                // Beispiel: Erfolgreicher Login nur mit Testdaten
+                if (email == "test@test.com" && password == "123456") {
+                    Log.d("MountainMaster", "Login erfolgreich!")
+                    isLoggedIn = true       // für main screen redirect
+                } else {
+                    errorMessage = "Falsche E-Mail oder Passwort"
+                }
 
                 isLoading = false
             }
@@ -66,16 +67,12 @@ class RegisterViewModel : ViewModel() {
     // Validierung
     private fun validateInputs(): Boolean {
         return when {
-            username.isBlank() -> {
-                errorMessage = "Bitte Benutzernamen eingeben"
-                false
-            }
             email.isBlank() -> {
                 errorMessage = "Bitte E-Mail eingeben"
                 false
             }
-            password.length < 8 -> {
-                errorMessage = "Passwort muss mindestens 8 Zeichen lang sein"
+            password.isBlank() -> {
+                errorMessage = "Bitte Passwort eingeben"
                 false
             }
             else -> true

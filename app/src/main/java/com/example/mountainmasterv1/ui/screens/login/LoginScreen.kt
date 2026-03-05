@@ -1,4 +1,4 @@
-package com.example.mountainmasterv1
+package com.example.mountainmasterv1.ui.screens.login
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -19,23 +19,24 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.mountainmasterv1.ui.components.HeaderSection
+import com.example.mountainmasterv1.ui.components.LoginRegisterToggle
+
 
 @Composable
-fun RegisterScreen(
-    username: String,
-    onUsernameChange: (String) -> Unit,
+fun LoginScreen(
     email: String,
     onEmailChange: (String) -> Unit,
     password: String,
     onPasswordChange: (String) -> Unit,
-    onRegisterClick: () -> Unit,
-    onNavigateToLogin: () -> Unit
+    onLoginClick: () -> Unit,
+    onNavigateToRegister: () -> Unit
 ) {
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
         // LILA HEADER
-        HeaderSection(topPadding = 50)
+        HeaderSection(topPadding = 80)
 
         // WEISSE KARTE
         Column(
@@ -50,29 +51,17 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(80.dp))
 
             Text(
-                text = "Create an account",
+                text = "Welcome back!",
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
 
             Text(
-                text = "and Master the Mountains",
+                text = "You've been missed",
                 color = Color.Gray
             )
 
             Spacer(modifier = Modifier.height(32.dp))
-
-            // Username Feld
-            OutlinedTextField(
-                value = username,
-                onValueChange = onUsernameChange,
-                placeholder = { Text("Username") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                singleLine = true
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
 
             // E-Mail Feld
             OutlinedTextField(
@@ -86,7 +75,7 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Passwort Feld mit Auge
+            // Passwort Feld und Auge
             var passwordVisible by remember { mutableStateOf(false) }
 
             OutlinedTextField(
@@ -118,7 +107,7 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "At least 8 characters",
+                text = "Forgot Password?",
                 modifier = Modifier.align(Alignment.End),
                 color = Color.Gray,
                 fontSize = 14.sp
@@ -127,23 +116,22 @@ fun RegisterScreen(
             Spacer(modifier = Modifier.height(24.dp))
 
             Button(
-                onClick = onRegisterClick,
+                onClick = onLoginClick,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(55.dp),
                 shape = RoundedCornerShape(14.dp),
                 colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF5B4BC4))
             ) {
-                Text("Register")
+                Text("Login")
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Toggle mit Navigation
             LoginRegisterToggle(
-                onRegisterClick = { },
-                onLoginClick = onNavigateToLogin,
-                isLoginScreen = false
+                onRegisterClick = onNavigateToRegister,
+                onLoginClick = { },
+                isLoginScreen = true
             )
         }
     }
