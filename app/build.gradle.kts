@@ -1,6 +1,9 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.compose)
+    kotlin("android")                     // Ohne Version - nimmt die vom Classpath
+    kotlin("plugin.compose")               // Ohne Version - nimmt die vom Classpath
 }
 
 android {
@@ -26,17 +29,25 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+
     buildFeatures {
         compose = true
     }
 }
 
-dependencies {
+// Kotlin Compiler Options AUSSERHALB von android {}
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_11)
+    }
+}
 
+dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -53,6 +64,8 @@ dependencies {
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+
+    // Zusätzliche Dependencies (nicht im Katalog)
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.10.0")
     implementation("androidx.compose.material:material-icons-extended:1.5.4")
     implementation("androidx.navigation:navigation-compose:2.7.7")
