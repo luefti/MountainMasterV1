@@ -4,8 +4,6 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.animation.*
-import androidx.compose.animation.core.tween
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -27,35 +25,7 @@ class MainActivity : ComponentActivity(){
 
                 NavHost(
                     navController = navController,
-                    startDestination = Screen.Login.route,
-                    enterTransition = {
-                        // Von Login zu Register: neue Seite kommt von rechts
-                        slideIntoContainer(
-                            towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                            animationSpec = tween(500)
-                        )
-                    },
-                    exitTransition = {
-                        // Von Login zu Register: alte Seite geht nach links
-                        slideOutOfContainer(
-                            towards = AnimatedContentTransitionScope.SlideDirection.End,
-                            animationSpec = tween(500)
-                        )
-                    },
-                    popEnterTransition = {
-                        // Von Register zurück zu Login: Login kommt von links
-                        slideIntoContainer(
-                            towards = AnimatedContentTransitionScope.SlideDirection.End,
-                            animationSpec = tween(500)
-                        )
-                    },
-                    popExitTransition = {
-                        // Von Register zurück zu Login: Register geht nach rechts
-                        slideOutOfContainer(
-                            towards = AnimatedContentTransitionScope.SlideDirection.Start,
-                            animationSpec = tween(500)
-                        )
-                    }
+                    startDestination = Screen.Login.route
                 ) {
                     composable(Screen.Login.route) {
                         val viewModel: LoginViewModel = viewModel()
