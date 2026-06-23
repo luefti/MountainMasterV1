@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.runtime.LaunchedEffect
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -11,7 +12,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.mountainmasterv1.navigation.Screen
-import com.example.mountainmasterv1.ui.screens.MainScreen
 import com.example.mountainmasterv1.ui.screens.login.LoginScreen
 import com.example.mountainmasterv1.ui.screens.login.LoginViewModel
 import com.example.mountainmasterv1.ui.screens.mailVerify.MailVerifyScreen
@@ -34,6 +34,12 @@ class MainActivity : ComponentActivity(){
                 ) {
                     composable(Screen.Login.route) {
                         val viewModel: LoginViewModel = viewModel()
+
+                        LaunchedEffect(viewModel.isLoggedIn) {
+                            if (viewModel.isLoggedIn) {
+                                navController.navigate(Screen.Main.route)
+                            }
+                        }
 
                         LoginScreen(
                             email = viewModel.email,

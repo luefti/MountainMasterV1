@@ -6,4 +6,6 @@ sealed class Screen(val route: String) {
     object MailVerify : Screen("mail_verify/{email}") {
         fun passEmail(email: String): String = "mail_verify/$email"
     }
+
+    object Main : Screen("main")
 }
