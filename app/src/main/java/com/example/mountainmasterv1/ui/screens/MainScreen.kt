@@ -30,14 +30,14 @@ fun MainScreen() {
     // State to track which tab is currently selected
     var selectedItemIndex by remember { mutableIntStateOf(0) }
 
-    // Define the tabs for the Bottom Bar
+    // Define tabs for the Bottom Bar
     val items = listOf(
         TabItem("Home", Icons.Filled.Home, Icons.Outlined.Home),
         TabItem("Mountains", Icons.Filled.Terrain, Icons.Outlined.Terrain),
         TabItem("Profile", Icons.Filled.Person, Icons.Outlined.Person)
     )
 
-    // The purple color from your image/brand
+    // purple color for design
     val brandPurple = Color(0xFF5B4BC4)
 
     Scaffold(
@@ -60,9 +60,9 @@ fun MainScreen() {
                             )
                         },
                         colors = NavigationBarItemDefaults.colors(
-                            // This changes the 'pill' background color when selected
+                            // changes background color when selected
                             indicatorColor = brandPurple.copy(alpha = 0.1f),
-                            // This changes the icon color to purple when selected
+                            // changes icon color to purple when selected
                             selectedIconColor = brandPurple,
                             selectedTextColor = brandPurple,
                             unselectedIconColor = Color.Gray,
@@ -73,7 +73,7 @@ fun MainScreen() {
             }
         }
     ) { innerPadding ->
-        // This is where the content of each tab will be displayed
+        // where content of each tab will be displayed
         Box(
             modifier = Modifier
                 .padding(innerPadding)
